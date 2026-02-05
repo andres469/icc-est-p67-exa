@@ -1,43 +1,36 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeMap;
 
+import controllers.PedidoController;
 import models.Pedido;
 
 public class App {
 
     public static void main(String[] args) throws Exception {
-        // Crear la lista inicial de pedidos
-        /// CODE
+       PedidoController controller = new PedidoController();
 
-        // MÉTODO A: filtrarPorZona(List<Pedido>, int umbral)
-        // Debe devolver un Stack con los pedidos cuya zona sea MAYOR al umbral
-        // Recorre la lista de pedidos y añade al Stack solo aquellos que cumplan la
-        // condición
-        System.out.println("=== MÉTODO A: Filtrar por zona > 150 ===");
+       List<Pedido> pedidos = crearPedidos(); 
+
+       Stack<Pedido> stackFiltrado = controller.filtrarPorZona(pedidos, 150);
+
+        stackFiltrado.forEach(System.out::println);
+
+        Set<Pedido> setOrdenado = controller.ordenarPorZona(stackFiltrado);
+
+        setOrdenado.forEach(System.out::println); 
+
+        TreeMap<Integer, Queue<Pedido>> mapaUrgencia = controller.agruparPorUrgencia(pedidos); 
+
+        mapaUrgencia.forEach((u, c) -> { 
+            System.out.println("Urgencia: " + u); c.forEach(System.out::println);
+        }); 
         
-        /// CODE
-
-        // MÉTODO B: ordenarPorZona(Stack<Pedido>)
-        // Debe devolver un Set (TreeSet) con los pedidos ordenados por zona ascendente
-        // El TreeSet debe usar un Comparator que compare los pedidos por su zona
-        // Importante: elimina duplicados basándose en cliente + zona
-        System.out.println("=== MÉTODO B: Ordenar por zona ===");
-        /// CODE
-
-        // MÉTODO C: agruparPorUrgencia(List<Pedido>)
-        // Debe devolver un TreeMap<Integer, Queue<Pedido>> donde:
-        // - La clave es el nivel de urgencia
-        // - El valor es una Queue (LinkedList) con todos los pedidos de esa urgencia
-        // Recorre todos los pedidos y agrúpalos según su urgencia
-        /// CODE
-
-        // MÉTODO D: explotarGrupo(TreeMap<Integer, Queue<Pedido>>)
-        // Debe encontrar el grupo (Queue) con MÁS pedidos del TreeMap
-        // Devolver un Stack con todos los pedidos de ese grupo más numeroso
-        // Recorre el TreeMap, encuentra la Queue más grande y pasa sus elementos al
-        // Stack
-        /// CODE
-
+        Stack<Pedido> grupoMayor = controller.explotarGrupo(mapaUrgencia); grupoMayor.forEach(System.out::println);
+     
     }
 
     static List<Pedido> crearPedidos() {
