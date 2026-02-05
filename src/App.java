@@ -14,6 +14,7 @@ public class App {
         // Recorre la lista de pedidos y añade al Stack solo aquellos que cumplan la
         // condición
         System.out.println("=== MÉTODO A: Filtrar por zona > 150 ===");
+        
         /// CODE
 
         // MÉTODO B: ordenarPorZona(Stack<Pedido>)
